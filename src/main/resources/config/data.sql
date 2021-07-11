@@ -1,0 +1,2 @@
+insert into account(id, iban , currency, balance, last_update_date) values(1, 'RO16RZBR0000060000232323', 'RON', 50.50, current_timestamp);
+insert into account(id, iban , currency, balance, last_update_date) values(2, 'RO94RZBR0000060000052342', 'USD', 14.23, current_timestamp);
