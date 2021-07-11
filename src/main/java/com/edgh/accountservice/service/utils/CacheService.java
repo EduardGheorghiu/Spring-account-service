@@ -23,7 +23,7 @@ public class CacheService {
     }
 
     //clear cache every 1 hour
-    @Scheduled(fixedRate =  60 * 1000)
+    @Scheduled(fixedRate = 60*  60 * 1000)
     public void evitRatesCache() {
         logger.debug("evitRatesCache -> Rates cache cleared");
         Objects.requireNonNull(cacheManager.getCache(Constants.RATES)).clear();
