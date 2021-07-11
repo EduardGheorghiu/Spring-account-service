@@ -15,7 +15,7 @@ public class RateDTO {
         this.timestamp = timestamp;
         this.base = base;
         this.rates = rates;
-        this. cacheable = true;
+        this.cacheable = true;
     }
 
     public RateDTO() {

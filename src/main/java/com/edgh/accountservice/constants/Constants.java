@@ -1,6 +1,5 @@
 package com.edgh.accountservice.constants;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 

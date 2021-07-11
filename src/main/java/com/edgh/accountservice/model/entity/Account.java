@@ -4,10 +4,9 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 
 @Table(name = "Account")
-@Entity(name ="Account")
+@Entity(name = "Account")
 @SequenceGenerator(name = "seq_account", sequenceName = "seq_account", allocationSize = 1)
 public class Account implements Serializable {
 

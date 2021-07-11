@@ -1,6 +1,5 @@
 package com.edgh.accountservice.service.impl;
 
-import com.edgh.accountservice.constants.Constants;
 import com.edgh.accountservice.enums.CurrencyEnum;
 import com.edgh.accountservice.exception.BusinessException;
 import com.edgh.accountservice.model.DTO.RateDTO;
@@ -8,21 +7,17 @@ import com.edgh.accountservice.model.entity.Account;
 import com.edgh.accountservice.model.repository.AccountRepository;
 import com.edgh.accountservice.service.AccountService;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.convert.ConversionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
 import org.springframework.web.server.ResponseStatusException;
 import reactor.core.publisher.Mono;
-import javax.annotation.Resource;
+
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Objects;
 
 
@@ -51,10 +46,10 @@ public class AccountServiceImpl implements AccountService {
 
         if (iban != null) {
             Account account = accountRepository.findByIBAN(iban);
-            if(account != null){
+            if (account != null) {
                 Double conversionRate = this.getConversionRate(CurrencyEnum.valueOf(account.getCurrency()));
-                if(conversionRate != null){
-                    if(account.getCurrency().equals(CurrencyEnum.valueOf(account.getCurrency()).name())) {
+                if (conversionRate != null) {
+                    if (account.getCurrency().equals(CurrencyEnum.valueOf(account.getCurrency()).name())) {
                         account.setBalance(new BigDecimal(account.getBalance().doubleValue() / conversionRate, MathContext.DECIMAL64));
                         account.setCurrency(CurrencyEnum.EUR.name());
                     }
@@ -76,10 +71,10 @@ public class AccountServiceImpl implements AccountService {
 
         Mono<RateDTO> exchangeRates = this.ratesService.getRatesFromAPI();
 
-        if(exchangeRates != null) {
+        if (exchangeRates != null) {
 
             LinkedHashMap rates = (LinkedHashMap) Objects.requireNonNull(exchangeRates.block()).getRates();
-            if(rates != null && rates.size() > 0){
+            if (rates != null && rates.size() > 0) {
                 return (Double) rates.get(currencyEnum.name());
             }
             logger.debug("getRates -> No rates");

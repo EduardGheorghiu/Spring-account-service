@@ -1,4 +1,5 @@
 package com.edgh.accountservice.test;
+
 import com.edgh.accountservice.constants.Constants;
 import com.edgh.accountservice.enums.CurrencyEnum;
 import com.edgh.accountservice.model.DTO.RateDTO;
@@ -27,13 +28,13 @@ import java.math.BigDecimal;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
-import static junit.framework.TestCase.assertTrue;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class BusinessLayerTest {
+public class BusinessLayerAndIntegrationTestSuite {
 
     private final String URL = "http://localhost:8080/";
     private final String GOOD_IBAN = "RO16RZBR0000060000232323";
@@ -49,8 +50,6 @@ public class BusinessLayerTest {
     private ExchangeRatesService exchangeRatesServiceMock;
 
 
-
-
     @Value("${exchangerates.api.key}")
     private String exchangeratesApiKey;
 
@@ -63,7 +62,7 @@ public class BusinessLayerTest {
         MockitoAnnotations.initMocks(this);
     }
 
-        @Test
+    @Test
     public void testErrorForAccountNotFound() {
 
         TestRestTemplate restTemplate = new TestRestTemplate();
@@ -88,7 +87,7 @@ public class BusinessLayerTest {
         TestRestTemplate restTemplate = new TestRestTemplate();
 
         RateDTO rateDTO = restTemplate.getForObject(exchangeRatesApiUrl + "?access_key=" + exchangeratesApiKey, RateDTO.class);
-        String rateString =  restTemplate.getForObject(exchangeRatesApiUrl + "?access_key=" + exchangeratesApiKey, String.class);
+        String rateString = restTemplate.getForObject(exchangeRatesApiUrl + "?access_key=" + exchangeratesApiKey, String.class);
 
 
         ObjectMapper mapper = new ObjectMapper();
@@ -101,12 +100,11 @@ public class BusinessLayerTest {
 
 
         assertThat(base.equals(rateDTO.getBase())
-                && success==rateDTO.isSuccess()
+                && success == rateDTO.isSuccess()
                 && timestamp.equals(rateDTO.getTimestamp())
                 && rates.equals(rateDTO.getRates()));
 
     }
-
 
 
     @Test
@@ -152,7 +150,7 @@ public class BusinessLayerTest {
 
     }
 
-    private Mono<RateDTO> populateCacheWithDefault(){
+    private Mono<RateDTO> populateCacheWithDefault() {
         RateDTO rateDTO = new RateDTO();
         rateDTO.setBase(Constants.DEFAULT_BASE);
         rateDTO.setRates(Constants.DEFAULT_RATES);

@@ -3,8 +3,6 @@ package com.edgh.accountservice.service.utils;
 import com.edgh.accountservice.constants.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -23,7 +21,7 @@ public class CacheService {
     }
 
     //clear cache every 1 hour
-    @Scheduled(fixedRate = 60*  60 * 1000)
+    @Scheduled(fixedRate = 60 * 60 * 1000)
     public void evitRatesCache() {
         logger.debug("evitRatesCache -> Rates cache cleared");
         Objects.requireNonNull(cacheManager.getCache(Constants.RATES)).clear();

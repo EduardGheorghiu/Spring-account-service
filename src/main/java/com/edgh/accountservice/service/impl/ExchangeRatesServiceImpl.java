@@ -17,7 +17,6 @@ import org.springframework.web.client.RestTemplate;
 import reactor.core.publisher.Mono;
 
 import javax.annotation.Resource;
-import java.util.Objects;
 
 @Service
 public class ExchangeRatesServiceImpl implements ExchangeRatesService {
@@ -52,9 +51,9 @@ public class ExchangeRatesServiceImpl implements ExchangeRatesService {
 
     @Override
     @Cacheable(value = Constants.RATES, key = "#root.methodName", unless = "#result.block().cacheable==false")
-    public Mono<RateDTO> getRatesFromAPI(){
+    public Mono<RateDTO> getRatesFromAPI() {
 
-        final String url = exchangeRatesApiUrl + "?access_key=" + exchangeratesApiKey ;
+        final String url = exchangeRatesApiUrl + "?access_key=" + exchangeratesApiKey;
 
         CircuitBreaker circuitBreaker = circuitBreakerFactory.create(Constants.CIRCUIT_BREAKER);
 
@@ -65,7 +64,7 @@ public class ExchangeRatesServiceImpl implements ExchangeRatesService {
 
     }
 
-    private Mono<RateDTO> getDefaultRates(){
+    private Mono<RateDTO> getDefaultRates() {
         logger.debug("CIRCUIT_BREAKER -> Default rates used");
 
         //evict default values from cache
